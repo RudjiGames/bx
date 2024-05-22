@@ -69,10 +69,8 @@ namespace bx
 	{
 #if BX_COMPILER_MSVC
 		_ReadBarrier();
-#elif BX_PLATFORM_CHEERP
-		__sync_synchronize();
 #else
-		asm volatile("":::"memory");
+		__atomic_thread_fence(__ATOMIC_RELEASE);
 #endif // BX_COMPILER_*
 	}
 
@@ -80,10 +78,8 @@ namespace bx
 	{
 #if BX_COMPILER_MSVC
 		_WriteBarrier();
-#elif BX_PLATFORM_CHEERP
-		__sync_synchronize();
 #else
-		asm volatile("":::"memory");
+		__atomic_thread_fence(__ATOMIC_ACQUIRE);
 #endif // BX_COMPILER_*
 	}
 
@@ -91,10 +87,8 @@ namespace bx
 	{
 #if BX_COMPILER_MSVC
 		_ReadWriteBarrier();
-#elif BX_PLATFORM_CHEERP
-		__sync_synchronize();
 #else
-		asm volatile("":::"memory");
+		__atomic_thread_fence(__ATOMIC_ACQ_REL);
 #endif // BX_COMPILER_*
 	}
 
